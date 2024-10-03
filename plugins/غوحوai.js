@@ -27,5 +27,5 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 
 handler.help = ['كيلوا'];
 handler.tags = ['ai'];
-handler.command = /^(كيلوا|killua)$/i;
+handler.command = /^(غوجو|gojo)$/i;
 export default handler;
