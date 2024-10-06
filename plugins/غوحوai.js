@@ -2,9 +2,9 @@ import fetch from 'node-fetch';
 
 const handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
-    const name = "غوجو"; // Character name
-    const anime = "ججتسو كايسن "; // Anime name
-    const techNews = `╔════▣◎▣════╗\n متنساش يا حب تعمل فولو هنا وانت معدي 🫵🥰م\nhttps://whatsapp.com/channel/0029VaJxI9uJkK7BedTH0D11\n+\n رقمي لو حصلت معاك اي مشكله\n  https://wa.me/201144480436\n╚════▣◎▣════╝`;
+    const name = "غوجو"; // اسم الشخصية
+    const anime = "ججتسو كايسن"; // اسم الأنمي
+    const techNews = `╔════▣◎▣════╗\n متنساش يا حب تعمل فولو هنا وانت معدي 🫵🥰\n https://whatsapp.com/channel/0029VaJxI9uJkK7BedTH0D11\n+\n رقمي لو حصلت معاك اي مشكله\n  https://wa.me/201144480436\n╚════▣◎▣════╝`;
 
     if (!text) {
       return conn.reply(m.chat, `*انا ${name} كيف يمكنني مساعدتك* \n\n*مثال:* .${command} هلا كيفك عرفني عن نفسك`, m);
@@ -18,8 +18,20 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       return conn.reply(m.chat, 'للاسف مافيش اجابه.', m);
     }
 
-    // Send the result and tech news
-    conn.reply(m.chat, result + '\n\n' + techNews, m);
+    // إعداد المحتوى الذي سيتم إرساله مع الزر
+    const captionn = result + '\n\n' + techNews;
+    const link = 'https://wa.me/201144480436';
+
+    // إرسال الرد مع زر ".غوجو"
+    await conn.sendButton(
+      m.chat, 
+      captionn, 
+      ' > GOJO | 🐼❤️', 
+      link, 
+      [['✨ الاجابه كمان مره 🐥', `.غوجو ${text}`]], 
+      m
+    );
+    
   } catch (error) {
     throw error;
   }
