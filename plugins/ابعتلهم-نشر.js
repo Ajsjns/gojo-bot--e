@@ -1,4 +1,4 @@
-// استيراد المكتبات
+.gps go|// استيراد المكتبات
 import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
 
 
@@ -78,7 +78,7 @@ const textMessage = args.slice(1).join(' ');
     return conn.reply(m.chat, 'يرجى توفير اسم المجموعة والنص المطلوب.', m);
   }
 
-  const formattedMessage = `المطور بيقولكو: ${textMessage}`;
+  const formattedMessage = `اعلام من المطور :\n\nالاعلام: ${textMessage}\n\n> المطور: @${m.sender.split('@')[0]}\n> انا: ${wm}\n> ملاحظه: يرجى أتباع التعليمات.`;
   await conn.sendMessage(groupId, { text: formattedMessage, mentions: [m.sender] }, { quoted: m });
   m.reply('تم إرسال الرسالة إلى المجموعة المحددة!');
 }
@@ -87,7 +87,7 @@ const textMessage = args.slice(1).join(' ');
 
 handler.help = ['tx'];
 handler.tags = ['owner'];
-handler.command = /^(النشر|_النشر)$/i;
+handler.command = /^(ابعتلهم|_النشر)$/i;
 
 handler.rowner = true;
 
