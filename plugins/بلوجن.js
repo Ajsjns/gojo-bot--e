@@ -1,88 +1,102 @@
+import cp, {exec as _exec} from 'child_process';
+import {promisify} from 'util';
 import fs from 'fs';
-import path from 'path';
+import axios from 'axios';
+import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
 
-// دالة لعرض محتوى الملف
-let displayFileContent = async (filename) => {
-    let filePath = path.join('plugins', filename);
-
-    try {
-        // التحقق من وجود الملف أولاً
-        await fs.promises.access(filePath, fs.constants.F_OK);
-    } catch (err) {
-        throw new Error(`الملف ${filename} غير موجود.`);
+const exec = promisify(_exec).bind(cp);
+const handler = async (m, {conn, isROwner, usedPrefix, command, text}) => {
+  
+  const ar = Object.keys(plugins);
+  const ar1 = ar.map((v) => v.replace('.js', ''));
+  
+  const images = ['https://telegra.ph/file/ba984d78fa802662438ee.jpg', 'https://telegra.ph/file/0e22282b399e105776618.jpg', 'https://telegra.ph/file/5e6456d22a8264b08a2bc.jpg', 'https://telegra.ph/file/996f53288a1e2f4f35812.jpg'];
+  
+  const randomImage = images[Math.floor(Math.random() * images.length)];
+  
+  const mediaMessage = await prepareWAMessageMedia({ image: { url: randomImage } }, { upload: conn.waUploadToServer });
+  
+  if (!text) {
+    const rows = ar1.map((v, index) => (
+    
+    { 
+    header: `الملــف رقـم : [${index + 1}]`, 
+    title: `${v}`, 
+    description: '', 
+    id: `${usedPrefix + command} ${v}` 
     }
+    
+    ));
 
-    try {
-        // قراءة المحتوى الحالي للملف
-        let fileContent = await fs.promises.readFile(filePath, 'utf8');
-        return fileContent;
-    } catch (err) {
-        throw new Error(`فشل في قراءة الملف ${filename}: ${err.message}`);
-    }
-};
-
-// دالة لجلب جميع الملفات الموجودة في مجلد 'plugins'
-let getPluginFiles = async () => {
-    let pluginPath = path.join('plugins');
-    try {
-        let files = await fs.promises.readdir(pluginPath);
-        return files.filter(file => file.endsWith('.js')); // جلب الملفات ذات الامتداد .js فقط
-    } catch (err) {
-        throw new Error('فشل في جلب قائمة الملفات.');
-    }
-};
-
-let handler = async (m, { isROwner, usedPrefix, command, text }) => {
-    await m.reply(global.wait);
-    if (!isROwner) return;
-
-    // الحالة الأولى: إذا لم يتم إرسال اسم ملف
-    if (!text) {
-        try {
-            // جلب قائمة الملفات من مجلد 'plugins'
-            let files = await getPluginFiles();
-
-            if (files.length === 0) {
-                throw new Error('لم يتم العثور على ملفات.');
-            }
-
-            // إنشاء أزرار لكل ملف بتنسيق .gpo {اسم_الملف}
-            let buttons = files.map(file => {
-                let filenameWithoutExt = path.basename(file, '.js'); // إزالة الامتداد
-                return [`.gpo ${filenameWithoutExt}`, `.عرض ${filenameWithoutExt}`];
-            });
-
-            // إرسال الرسالة مع الأزرار
-            await conn.sendButton(
-                m.chat,
-                'اختر ملفاً لعرضه:',
-                ' > PLUTO | 🐼❤️',
-                '', // يمكنك وضع رابط هنا إذا لزم الأمر
-                buttons, // الأزرار التي تم إنشاؤها
-                m
-            );
-        } catch (e) {
-            console.error(`حدث خطأ: ${e.message}`);
-            m.reply(`حدث خطأ: ${e.message}`);
+    const caption = `╭─────────────────────────╮\n\n│ قائــمة ملفــات plugins.\n\n│ عدد الملفات المتاحة: ${ar1.length}\n\n╰─────────────────────────╯`;
+    
+    const msg = generateWAMessageFromContent(m.chat, {
+    viewOnceMessage: {
+      message: {
+        interactiveMessage: {
+          body: { text: caption },
+          footer: { text: wm },
+          header: {
+            hasMediaAttachment: true,
+            imageMessage: mediaMessage.imageMessage
+          },
+          nativeFlowMessage: {
+            buttons: [
+              {
+                name: 'single_select',
+                buttonParamsJson: JSON.stringify({
+                  title: '「 قــائــمــة الملفــات 」',
+                  sections: [
+                    {
+                  title: '「 قائــمة ملفــات plugins 」',
+                  highlight_label: wm,
+                  rows: rows
+                      
+                    }
+                  ]
+                })
+              }
+            ]
+          }
         }
-    } else {
-        // الحالة الثانية: إذا تم إرسال اسم ملف (عند اختيار الزر)
-        let filename = text.trim() + '.js';
-
-        try {
-            // عرض محتوى الملف
-            let fileContent = await displayFileContent(filename);
-            m.reply(`نص الملف ${filename}:\n\n${fileContent}`);
-        } catch (e) {
-            console.error(`حدث خطأ أثناء عرض الملف ${filename}: ${e.message}`);
-            m.reply(`حدث خطأ أثناء عرض الملف ${filename}: ${e.message}`);
-        }
+      }
     }
+  }, { userJid: conn.user.jid, quoted: m });
+    
+    await conn.relayMessage(m.chat, msg.message, { messageId: msg.key.id });
+    return;
+  }
+
+  let o;
+  try {
+    o = await exec(`cat plugins/${text}.js`);
+  } catch (e) {
+    o = e;
+  }
+
+  const {stdout, stderr} = o;
+  if (stdout.trim()) {
+    const aa = await conn.sendMessage(m.chat, {text: stdout}, {quoted: m});
+    await conn.sendMessage(m.chat, {
+      document: fs.readFileSync(`./plugins/${text}.js`), 
+      mimetype: 'application/javascript', 
+      fileName: `${text}.js`
+    }, {quoted: aa});
+  }
+  
+  if (stderr.trim()) {
+    const aa2 = await conn.sendMessage(m.chat, {text: stderr}, {quoted: m});
+    await conn.sendMessage(m.chat, {
+      document: fs.readFileSync(`./plugins/${text}.js`), 
+      mimetype: 'application/javascript', 
+      fileName: `${text}.js`
+    }, {quoted: aa2});
+  }
 };
 
-handler.help = ['viewplugin'];
+handler.help = ['getplugin'].map((v) => v + ' *<nombre>*');
 handler.tags = ['owner'];
-handler.command = /^(gpo|باتش-عرض|عرض)$/i;
+handler.command = /^(باتش|gp)$/i;
 handler.rowner = true;
 
 export default handler;
