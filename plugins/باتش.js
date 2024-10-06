@@ -1,38 +1,102 @@
 import cp, {exec as _exec} from 'child_process';
 import {promisify} from 'util';
 import fs from 'fs';
-
+import axios from 'axios';
+import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
 
 const exec = promisify(_exec).bind(cp);
 const handler = async (m, {conn, isROwner, usedPrefix, command, text}) => {
-  const datas = global
-  const idioma = datas.db.data.users[m.sender].language
-  const _translate = JSON.parse(fs.readFileSync(`./language/${idioma}.json`))
-  const tradutor = _translate.plugins.owner_getplugin
   
   const ar = Object.keys(plugins);
   const ar1 = ar.map((v) => v.replace('.js', ''));
-  if (!text) throw `${tradutor.texto1[0]} ${usedPrefix + command}* info-infobot\n\n${tradutor.texto1[1]} ${ar1.map((v) => ' ' + v).join`\n*◉*`}`;
-  if (!ar1.includes(text)) return m.reply(`${tradutor.texto2[0]} "${text}", ${tradutor.texto2[1]} ${ar1.map((v) => ' ' + v).join`\n*◉*`}`);
+  
+  const images = ['https://telegra.ph/file/ba984d78fa802662438ee.jpg', 'https://telegra.ph/file/0e22282b399e105776618.jpg', 'https://telegra.ph/file/5e6456d22a8264b08a2bc.jpg', 'https://telegra.ph/file/996f53288a1e2f4f35812.jpg'];
+  
+  const randomImage = images[Math.floor(Math.random() * images.length)];
+  
+  const mediaMessage = await prepareWAMessageMedia({ image: { url: randomImage } }, { upload: conn.waUploadToServer });
+  
+  if (!text) {
+    const rows = ar1.map((v, index) => (
+    
+    { 
+    header: `الملــف رقـم : [${index + 1}]`, 
+    title: `${v}`, 
+    description: '', 
+    id: `${usedPrefix + command} ${v}` 
+    }
+    
+    ));
+
+    const caption = `╭─────────────────────────╮\n\n│ قائــمة ملفــات plugins.\n\n│ عدد الملفات المتاحة: ${ar1.length}\n\n╰─────────────────────────╯`;
+    
+    const msg = generateWAMessageFromContent(m.chat, {
+    viewOnceMessage: {
+      message: {
+        interactiveMessage: {
+          body: { text: caption },
+          footer: { text: wm },
+          header: {
+            hasMediaAttachment: true,
+            imageMessage: mediaMessage.imageMessage
+          },
+          nativeFlowMessage: {
+            buttons: [
+              {
+                name: 'single_select',
+                buttonParamsJson: JSON.stringify({
+                  title: '「 قــائــمــة الملفــات 」',
+                  sections: [
+                    {
+                  title: '「 قائــمة ملفــات plugins 」',
+                  highlight_label: wm,
+                  rows: rows
+                      
+                    }
+                  ]
+                })
+              }
+            ]
+          }
+        }
+      }
+    }
+  }, { userJid: conn.user.jid, quoted: m });
+    
+    await conn.relayMessage(m.chat, msg.message, { messageId: msg.key.id });
+    return;
+  }
+
   let o;
   try {
-    o = await exec('cat plugins/' + text + '.js');
+    o = await exec(`cat plugins/${text}.js`);
   } catch (e) {
     o = e;
-  } finally {
-    const {stdout, stderr} = o;
-    if (stdout.trim()) {
-      const aa = await conn.sendMessage(m.chat, {text: stdout}, {quoted: m});
-      await conn.sendMessage(m.chat, {document: fs.readFileSync(`./plugins/${text}.js`), mimetype: 'application/javascript', fileName: `${text}.js`}, {quoted: aa});
-    }
-    if (stderr.trim()) {
-      const aa2 = await conn.sendMessage(m.chat, {text: stderr}, {quoted: m});
-      await conn.sendMessage(m.chat, {document: fs.readFileSync(`./plugins/${text}.js`), mimetype: 'application/javascript', fileName: `${text}.js`}, {quoted: aa2});
-    }
+  }
+
+  const {stdout, stderr} = o;
+  if (stdout.trim()) {
+    const aa = await conn.sendMessage(m.chat, {text: stdout}, {quoted: m});
+    await conn.sendMessage(m.chat, {
+      document: fs.readFileSync(`./plugins/${text}.js`), 
+      mimetype: 'application/javascript', 
+      fileName: `${text}.js`
+    }, {quoted: aa});
+  }
+  
+  if (stderr.trim()) {
+    const aa2 = await conn.sendMessage(m.chat, {text: stderr}, {quoted: m});
+    await conn.sendMessage(m.chat, {
+      document: fs.readFileSync(`./plugins/${text}.js`), 
+      mimetype: 'application/javascript', 
+      fileName: `${text}.js`
+    }, {quoted: aa2});
   }
 };
+
 handler.help = ['getplugin'].map((v) => v + ' *<nombre>*');
 handler.tags = ['owner'];
 handler.command = /^(باتش|gp)$/i;
 handler.rowner = true;
+
 export default handler;
