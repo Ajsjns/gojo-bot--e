@@ -4,7 +4,7 @@ let handler = async (m, { conn, args }) => {
     // إرسال الأزرار لاختيار قفل أو فتح
     await conn.sendButton(m.chat, 
       `❒ أخــتر من الأزرار:`, 
-      ' > PLUTO | 🐼❤️', 
+      ' > ‌🇬‌🇴 ‌🇯‌🇴| 🐼❤️', 
       null, 
       [
         ['قفل المجموعة 🔒', `.جروب قفل`],
