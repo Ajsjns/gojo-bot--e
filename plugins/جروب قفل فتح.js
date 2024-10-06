@@ -1,4 +1,4 @@
-let handler = async (m, { conn, args, usedPrefix, command }) => {
+/*let handler = async (m, { conn, args, usedPrefix, command }) => {
   let isClose = { // Switch Case Like :v
       'فتح': 'not_announcement',
       'قفل': 'announcement',
