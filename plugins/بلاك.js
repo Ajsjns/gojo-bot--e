@@ -14,7 +14,7 @@ const handler = async (m, { text, usedPrefix, command, conn }) => {
       let captionn = result.result;  // النص الذي سيتم إرساله مع الصورة أو الرد
 
       // إرسال الصورة مع الزر
-      await conn.sendButton(m.chat, captionn, ' > PLUTO | 🐼❤️', null, [['🔄 جرب مرة أخرى 🔄', `.بلاك ${text}`]], m);
+      await conn.sendButton(m.chat, captionn, ' > gojo | 🐼❤️', null, [['🔄 جرب مرة أخرى 🔄', `.بلاك ${text}`]], m);
 
     } else {
       throw '> *خطأ ⚠️: لم يتم العثور على نتيجة.*';
