@@ -1,4 +1,4 @@
-.gps go|// استيراد المكتبات
+// استيراد المكتبات
 import { prepareWAMessageMedia, generateWAMessageFromContent } from '@whiskeysockets/baileys';
 
 
