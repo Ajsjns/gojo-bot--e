@@ -3,24 +3,15 @@ import {join, dirname} from 'path';
 import {createRequire} from 'module';
 import {fileURLToPath} from 'url';
 import {setupMaster, fork} from 'cluster';
-import cfonts from 'cfonts';
 import {createInterface} from 'readline';
 import yargs from 'yargs';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const require = createRequire(__dirname);
-const {say} = cfonts;
 const rl = createInterface(process.stdin, process.stdout);
 
-say('The Mystic\nBot', {
-  font: 'chrome',
-  align: 'center',
-  gradient: ['red', 'magenta']});
-say(`Bot creado por Bruno Sobrino`, {
-  font: 'console',
-  align: 'center',
-  gradient: ['red', 'magenta']});
-
 let isRunning = false;
+
 /**
 * Start a js file
 * @param {String} file `path/to/file`
@@ -30,17 +21,13 @@ function start(file) {
   isRunning = true;
   const args = [join(__dirname, file), ...process.argv.slice(2)];
 
-  /** say('[ ℹ️ ] Escanea el código QR o introduce el código de emparejamiento en WhatsApp.', {
-    font: 'console',
-    align: 'center',
-    gradient: ['red', 'magenta']}); **/
-
   setupMaster({
     exec: args[0],
-    args: args.slice(1)});
+    args: args.slice(1)
+  });
+  
   const p = fork();
   p.on('message', (data) => {
-
     console.log('[RECIBIDO]', data);
     switch (data) {
       case 'reset':
@@ -53,6 +40,7 @@ function start(file) {
         break;
     }
   });
+
   p.on('exit', (_, code) => {
     isRunning = false;
     console.error('[ ℹ️ ] Ocurrio un error inesperado:', code);
@@ -67,6 +55,7 @@ function start(file) {
       process.exit();
     }
   });
+
   const opts = new Object(yargs(process.argv.slice(2)).exitProcess(false).parse());
   if (!opts['test']) {
     if (!rl.listenerCount()) {
@@ -76,4 +65,5 @@ function start(file) {
     }
   }
 }
+
 start('main.js');
