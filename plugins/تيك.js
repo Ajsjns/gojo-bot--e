@@ -1,93 +1,100 @@
-import Starlights from '@StarlightsTeam/Scraper';
+import fetch from 'node-fetch';
 
-let handler = async (m, { conn, args, usedPrefix, command }) => {
+const handler = async (m, {conn, text, args, usedPrefix, command, isROwner, isOwner, isMods, isPrems}) => {
 
-  if (!args || !args[0]) return conn.reply(m.chat, '🚩 الرجاء إدخال رابط فيديو TikTok مع الأمر.\n\n`مثال:`\n' + `> *${usedPrefix + command}* https://vm.tiktok.com/ZMrFCX5jf/`, m);
+if (isOwner) {
 
-  if (!args[0].match(/tiktok/gi)) {
-    await conn.reply(m.chat, `تأكد من أن الرابط خاص بـ TikTok`, m);
-    return await conn.sendMessage(m.chat, { react: { text: '✖️', key: m.key } });
+let fkontak = { "key": { "participants":"0@s.whatsapp.net", "remoteJid": "status@broadcast", "fromMe": false, "id": "Halo" }, "message": { "contactMessage": { "vcard": `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${m.sender.split('@')[0]}:${m.sender.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` }}, "participant": "0@s.whatsapp.net" }
+
+
+  if (!text) {
+  
+  await conn.sendMessage(m.chat, { text: `*❲ ❗ ❳ لم يتم إدخال رابط.*\nيرجي ادخال رابط مثال :\n> ➤  ${usedPrefix + command} https://vm.tiktok.com/ZM686Q4ER/` }, { quoted: fkontak });
+  
+  await conn.sendMessage(m.chat, { react: { text: '❗', key: m.key } });
+  
+  return;
   }
+  
+    if (!/tiktok/.test(text)) {
+  
+  await conn.sendMessage(m.chat, { text: `*❲ ❗ ❳ حدث خطأ عند البحث عن الرابط .*\nيرجي ادخال رابط صحيح مثال :\n> ➤  ${usedPrefix + command} https://vm.tiktok.com/ZM686Q4ER/` }, { quoted: fkontak });
+  
+  await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } });
+  
+  return;
+  }
+  
+  
+await conn.sendMessage(m.chat, { react: { text: '🔍', key: m.key } });
 
-  await conn.sendMessage(m.chat, { react: { text: '⌛', key: m.key } });
+try {
 
-  try {
-    const url = args[0];
+const response = await fetch(`https://deliriusapi-official.vercel.app/download/tiktok?url=${text}`);
 
-    // استخراج البيانات من الفيديو
-    let { title, author, duration, views, likes, comment, share, published, downloads, dl_url, thumbnail } = await Starlights.tiktokdl(url);
+const data = await response.json()
+const { author, meta, music, title, duration, like, share, comment, download, published} = data.data
 
-    let txt = '`◉—✩ تيـكـتوك  -  تـحـمـيـل ✩—◉`\n\n';
-    txt += `	✩  *العنوان* : ${title}\n`;
-    txt += `	✩  *الكاتب* : ${author}\n`;
-    txt += `	✩  *المدة* : ${duration} ثواني\n`;
-    txt += `	✩  *المشاهدات* : ${views}\n`;
-    txt += `	✩  *الإعجابات* : ${likes}\n`;
-    txt += `	✩  *التعليقات* : ${comment}\n`;
-    txt += `	✩  *المشاركات* : ${share}\n`;
-    txt += `	✩  *تاريخ النشر* : ${published}\n`;
-    txt += `	✩  *الرابط* : ${dl_url}\n`;
-    txt += `	✩  *عدد التحميلات* : ${downloads}\n\n`;
-    txt += `> ✩  *أنتظر جاري إرسال الملفات ...*\n\n`;
+const cap2 = `*\`تفضل طلبك يا صديقي 🍿❤️\`*\n\n⌲ العنوان : ${title}\n⌲ الحجم : ${meta.media[0].size_hd}\n⌲ المدة : ${duration}\n⌲ الاعجابات : ${like}\n⌲ المشاركات : ${share}\n⌲ التحميلات : ${download}\n⌲ التعليقات : ${comment}\n⌲ النشر : ${published}\n⌲ الحساب : ${author.username}\n⌲ الصانع : ${author.nickname}\n⌲ الصوت : ${music.title}\n⌲ المنتج : ${music.author}`;
 
-    // إرسال الرسالة مع التفاصيل
-    await conn.sendMessage(m.chat, {
-      text: txt,
-      contextInfo: {
-        externalAdReply: {
-          title: `🔍 ${title}`,
-          body: `🗄️ ${author}`,
-          thumbnailUrl: thumbnail, // الصورة المصغرة من البيانات
-          mediaType: 1,
-          renderLargerThumbnail: true
-        }
-      }
-    }, { quoted: m });
 
-    // إرسال الفيديو مع الصورة المصغرة
-    await conn.sendMessage(m.chat, {
-      video: { url: dl_url },
-      contextInfo: {
-        externalAdReply: {
-          showAdAttribution: true,
-          mediaType: 2, // تحديد mediaType إلى 2 لرسالة الفيديو
-          mediaUrl: url,
-          title: `🎬 ${title}`,
-          body: `بقلم ${author} | ${views} مشاهدة`,
-          sourceUrl: url,
-          thumbnail: { url: thumbnail } // الصورة المصغرة من الفيديو
-        }
-      }
-    }, { quoted: m });
+//await conn.sendMessage(m.chat, {video: {url: meta.media[0].hd}, mimetype: , tiktok.mp4, caption: cap2}, {quoted: m});
 
-    // إرسال الصوت مع الصورة المصغرة
-    await conn.sendMessage(m.chat, {
-      audio: { url: dl_url },
-      mimetype: 'audio/mpeg',
-      fileName: `${title}.mp3`,
-      contextInfo: {
-        externalAdReply: {
-          showAdAttribution: true,
-          mediaType: 2,
-          mediaUrl: url,
-          title: `🎵 ${title}`,
-          body: `الاستماع الآن | بقلم ${author}`,
-          sourceUrl: url,
-          thumbnail: { url: thumbnail } // الصورة المصغرة من الفيديو
-        }
-      }
-    }, { quoted: m });
+await conn.sendMessage(m.chat, {video: {url: meta.media[0].hd}, mimetype: 'video/mp4', fileName: 'tiktok.mp4', caption: cap2}, {quoted: fkontak});
 
-    await conn.sendMessage(m.chat, { react: { text: '✔️', key: m.key } });
+await conn.sendMessage(m.chat, {audio: {url: meta.media[0].hd}, mimetype: 'audio/mpeg', fileName: 'tiktok.mp3'}, {quoted: fkontak});
 
-  } catch (e) {
-    await conn.reply(m.chat, '⚠️ حدث خطأ أثناء محاولة تحميل الفيديو.', m);
-    await conn.sendMessage(m.chat, { react: { text: '✖️', key: m.key } });
+//conn.sendFile(m.chat, meta.media[0].hd, 'tiktok.mp4', cap2, m) mimetype: fileName
+
+await conn.sendMessage(m.chat, { react: { text: '👌🏻', key: m.key } });
+
+} catch {
+ await conn.sendMessage(m.chat, { text: `*\`❲ ❗ ❳ حدث خطأ عند البحث عن الرابط .\`*\nيرجي ادخال رابط صحيح مثال :\n> ➤  ${usedPrefix + command} https://vm.tiktok.com/ZM686Q4ER/` }, { quoted: fkontak });
+ 
+ await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } });
+    }
+
+} else if (isROwner){
+} else if (isMods){
+} else if (isPrems){
+} else {
+
+  if (!text) {
+  
+  await conn.sendMessage(m.chat, { text: `*❲ ❗ ❳ لم يتم إدخال رابط.*\nيرجي ادخال رابط مثال :\n> ➤  ${usedPrefix + command} https://vm.tiktok.com/ZM686Q4ER/` }, { quoted: m });
+  
+  await conn.sendMessage(m.chat, { react: { text: '❗', key: m.key } });
+  
+  return;
+  }
+  
+    if (!/tiktok/.test(text)) {
+  
+  await conn.sendMessage(m.chat, { text: `*❲ ❗ ❳ حدث خطأ عند البحث عن الرابط .*\nيرجي ادخال رابط صحيح مثال :\n> ➤  ${usedPrefix + command} https://vm.tiktok.com/ZM686Q4ER/` }, { quoted: m });
+  
+  await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } });
+  
+  return;
+  }
+  
+await conn.sendMessage(m.chat, { react: { text: '🔍', key: m.key } });
+
+try {
+const dataFn = await conn.getFile(`${global.MyApiRestBaseUrl}/api/tiktokv2?url=${args[0]}&apikey=${global.MyApiRestApikey}`);
+const cap2 = `تفضل طلبك يا صديقي 🧞`;
+
+await conn.sendMessage(m.chat, {video: dataFn.data, caption: cap2}, {quoted: m});
+
+await conn.sendMessage(m.chat, { react: { text: '👌🏻', key: m.key } });
+
+} catch {
+ await conn.sendMessage(m.chat, { text: `*❲ ❗ ❳ حدث خطأ عند البحث عن الرابط .*\nيرجي ادخال رابط صحيح مثال :\n> ➤  ${usedPrefix + command} https://vm.tiktok.com/ZM686Q4ER/` }, { quoted: m });
+ 
+ await conn.sendMessage(m.chat, { react: { text: '❌', key: m.key } });
+    }
+  
   }
 };
 
-handler.help = ['tiktok *<رابط tt>*'];
-handler.tags = ['downloader'];
 handler.command = /^(تيك)$/i;
-
 export default handler;
