@@ -9,7 +9,7 @@ const fakecontact = { 'key': { 'participants': '0@s.whatsapp.net', 'remoteJid': 
  const vn = './media/الكلب.mp3'; //src sounds
  const vn2 = './media/سقيتك كاس.mp3'; 
    
- let num = "201144480436"; //number owner
+ let num = "967783179256"; //number owner
  let num2 = "994409422241"; //number bot
  let sender = m.sender.split('@')[0];
  
@@ -20,7 +20,7 @@ const fakecontact = { 'key': { 'participants': '0@s.whatsapp.net', 'remoteJid': 
  if (phoneNumber === num) {
           
   this.sendMessage(m.chat, {audio: {url: vn2}, fileName: 'error.mp3', mimetype: 'audio/mpeg', ptt: true}, {quoted: fakecontact});
- this.sendMessage(m.chat, {text: `*عاوز اي من مطوري ي🧐 @${m.sender.split('@')[0]} 🧞*`}, {quoted: fakecontact});
+ this.sendMessage(m.chat, {text: `*ماذا تريد من مطوري ي🧐 @${m.sender.split('@')[0]} 🧞*`}, {quoted: fakecontact});
  return;
  
  } else if (phoneNumber === num2) {
@@ -31,7 +31,7 @@ const fakecontact = { 'key': { 'participants': '0@s.whatsapp.net', 'remoteJid': 
  } else {
           
   this.sendMessage(m.chat, {audio: {url: vn}, fileName: 'error.mp3', mimetype: 'audio/mpeg', ptt: true}, {quoted: fakecontact});
- this.sendMessage(m.chat, {text: `*ايوا ي @${m.sender.split('@')[0]} عاوز أي 🧐*`}, {quoted: fakecontact});
+ this.sendMessage(m.chat, {text: `*ايوا ي @${m.sender.split('@')[0]} وش تبي ي 🧐*`}, {quoted: fakecontact});
  return;
  }
  } 
