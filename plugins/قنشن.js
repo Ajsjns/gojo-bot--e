@@ -11,7 +11,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     if (id in conn.tekateki) {
         conn.reply(m.chat, `
 ╮───────────────────────╭ـ
-│ *في سؤال لسه مجاوبتش عليه يا فاشل* ┃❌ ❯
+│ *في سؤال عادك ماجاوبت عليه يا فاشل* ┃❌ ❯
 ╯───────────────────────╰ـ`.trim(), conn.tekateki[id][0]);
         throw false;
     }
@@ -46,7 +46,7 @@ let handler = async (m, { conn, usedPrefix }) => {
                 setTimeout(async () => {
                     if (conn.tekateki[id]) await conn.reply(m.chat, `
 ╮───────────────────────╭ـ
-│ ❎ *خلص الوقت وانت زي منت فاشل مجوبتش*
+│ ❎ *خلص الوقت وانت زي منت فاشل ماجاوبت*
 │ ✅ *الاجابه هي : ${answer}*
 ╯───────────────────────╰ـ`.trim(), conn.tekateki[id][0]);
 
