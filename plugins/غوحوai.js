@@ -4,7 +4,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
   try {
     const name = "غوجو"; // اسم الشخصية
     const anime = "ججتسو كايسن"; // اسم الأنمي
-    const techNews = `╔════▣◎▣════╗\n متنساش يا حب تعمل فولو هنا وانت معدي 🫵🥰\n https://whatsapp.com/channel/0029VaJxI9uJkK7BedTH0D11\n+\n رقمي لو حصلت معاك اي مشكله\n  https://wa.me/201144480436\n╚════▣◎▣════╝`;
+    const techNews = `╔════▣◎▣════╗\n لاتنسى يا حب تعمل فولو هنا وانت معدي 🫵🥰\n https://whatsapp.com/channel/0029VamtPU8EKyZLsLtKsJ0j\n+\n رقمي لو حصلت معاك اي مشكله\n  https://wa.me/967783179256\n╚════▣◎▣════╝`;
 
     if (!text) {
       return conn.reply(m.chat, `*انا ${name} كيف يمكنني مساعدتك* \n\n*مثال:* .${command} هلا كيفك عرفني عن نفسك`, m);
@@ -20,7 +20,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
 
     // إعداد المحتوى الذي سيتم إرساله مع الزر
     const captionn = result + '\n\n' + techNews;
-    const link = 'https://wa.me/201144480436';
+    const link = 'https://wa.me/967783179256';
 
     // إرسال الرد مع زر ".غوجو"
     await conn.sendButton(
@@ -28,7 +28,7 @@ const handler = async (m, { conn, text, usedPrefix, command }) => {
       captionn, 
       ' > GOJO | 🐼❤️', 
       link, 
-      [['✨ الاجابه كمان مره 🐥', `.غوجو ${text}`]], 
+      [['✨ الاجابه مره اخرى 🐥', `.غوجو ${text}`]], 
       m
     );
     
