@@ -14,12 +14,12 @@ global.authFile = `MysticSession`;
 global.isBaileysFail = false
 
 global.owner = [
-  ['201144480436', '👑 *`𝙀𝙢𝙖𝙢-𝖆𝖇𝖔𝖑𝖊𝖑𝖆`*⁩⁩ - 𝙤𝙢𝙚𝙧 👑', true],
-  ['201225016578', '💫 omar 2 💫', true]
+  ['967783179256', 'STIVEN', true],
+  ['967783179256', 'STIVEN', true]
 ];
 
-global.suittag = ['201144480436'];
-global.prems = ['201144480436'];
+global.suittag = ['967783179256'];
+global.prems = ['967783179256'];
 
 global.packname = '𝖘𝖙𝖎𝖐𝖊𝖗 𝖇𝖞-e⃠m͟a͟m͟ a͟b͟o͟l͟e͟l͟a͟';
 global.author = 'b⃠g⃠o⃠j⃠o⃠ b⃠o⃠t⃠ b̶y̶-e̸m̸a̸m̸';
@@ -57,10 +57,10 @@ global.mysticbot = 'The Mystic - Bot';
 global.channel = 'https://whatsapp.com/channel/0029Vaein6eInlqIsCXpDs3y';
 global.md = 'https://github.com/BrunoSobrino/TheMystic-Bot-MD';
 global.mysticbot = 'https://github.com/BrunoSobrino/TheMystic-Bot-MD';
-global.waitt = '*_[ ⏳ ] استني..._*';
+global.waitt = '*_[ ⏳ ] انتظر..._*';
 global.waittt = '*_[ ⏳ ] ويتت..._*';
 global.waitttt = '*_[ ⏳ ] ويت..._*';
-global.nomorown = '201144480436';
+global.nomorown = '967783179256';
 global.pdoc = ['application/vnd.openxmlformats-officedocument.presentationml.presentation', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.ms-excel', 'application/msword', 'application/pdf', 'text/rtf'];
 global.cmenut = '❖––––––『';
 global.cmenub = '┊✦ ';
