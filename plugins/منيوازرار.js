@@ -35,7 +35,7 @@ conn.relayMessage(m.chat, { viewOnceMessage: { message: { interactiveMessage: { 
 *• ──╾⊱﹝⚜️﹞⊰╼── •*
 ╗───¤مــعلــومــات الــ🤖بــوت
 > إســم الــبــوت: 𝐆𝐎𝐉𝐎⚡𝐁𝐎𝐓
-> الــمــطــو: 𝗲𝗺𝗮𝗺 𝗮𝗯𝗼𝗹𝗲𝗹𝗮
+> الــمــطــو: STIVEN
 > مــدة الــتــشــغــيل : ${uptime}
 *• ──╾⊱﹝⚜️﹞⊰╼── •*
 > Copyright © 2024 𝐆𝐎𝐉𝐎⚡𝐁𝐎𝐓`,subtitle: "gojo",},header: { hasMediaAttachment: true,...(await prepareWAMessageMedia({ image : { url: url } }, { upload: conn.waUploadToServer }, {quoted: m}))},nativeFlowMessage: { buttons: [
@@ -136,7 +136,7 @@ conn.relayMessage(m.chat, { viewOnceMessage: { message: { interactiveMessage: { 
                      },
                      {
                name: "cta_url",
-               buttonParamsJson: '{"display_text":"⌈🌐╎قـنـاة الـمـطـور╎🌐⌋","url":"https://whatsapp.com/channel/0029VaXddtu0lwgiREisx82C","merchant_url":"https://whatsapp.com/channel/0029VaJxI9uJkK7BedTH0D11"}'
+               buttonParamsJson: '{"display_text":"⌈🌐╎قـنـاة الـمـطـور╎🌐⌋","url":"https://whatsapp.com/channel/0029VamtPU8EKyZLsLtKsJ0j","merchant_url":"https://whatsapp.com/channel/0029VamtPU8EKyZLsLtKsJ0j"}'
                             }
                         ]
                     }
