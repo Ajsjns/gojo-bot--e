@@ -17,7 +17,7 @@ let vap = `*〔 Y O U T U B E P L A Y 〕*
 *تاريخ نشره:* ${publishedTime}
 *مدته:* ${durationH}
 *عدد المشاهدات:* ${viewH}
-لا تنسي متابعه قناه مالك البوت ‏ https://whatsapp.com/channel/0029VaJxI9uJkK7BedTH0D11 `
+لا تنسي متابعه قناه مالك البوت ‏ https://whatsapp.com/channel/0029VamtPU8EKyZLsLtKsJ0j `
 
 conn.sendMessage(m.chat, {
 text: vap,
