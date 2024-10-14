@@ -70,7 +70,7 @@ let handler = async (m, {
 }
 handler.help = ["secmail"]
 handler.tags = ["misc"]
-handler.command = /^(فيك)$/i
+handler.command = /^(بريد)$/i
 export default handler
 
 function msToTime(duration) {
