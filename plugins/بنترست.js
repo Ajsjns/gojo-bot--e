@@ -7,7 +7,7 @@ const {
 
 let handler = async (message, { conn, text, usedPrefix, command }) => {
   if (!text) {
-    return conn.reply(message.chat, "​​​​​​​​​​​​​​​​​​​🗿 *شكلك نسيت تحط نص 😂\n دخل نص عشان اقدر ابحث بجوده ممتازه علي بنترست*", message);
+    return conn.reply(message.chat, "​​​​​​​​​​​​​​​​​​​🗿 *شكلك نسيت تحط نص 😂\n دخل نص عشان اقدر ابحث بجوده ممتازه على بنترست*", message);
   }
 
   try {
@@ -52,8 +52,8 @@ let handler = async (message, { conn, text, usedPrefix, command }) => {
                                 name: "cta_url",
                                 buttonParamsJson: JSON.stringify({
                                     display_text: "قـنـاتـي للانمي واخبار البوت ",                   
-                                    url: "https://whatsapp.com/channel/0029VaJxI9uJkK7BedTH0D11",
-                                    merchant_url: "https://whatsapp.com/channel/0029VaJxI9uJkK7BedTH0D11د. "
+                                    url: "https://whatsapp.com/channel/0029VamtPU8EKyZLsLtKsJ0j",
+                                    merchant_url: "https://whatsapp.com/channel/0029VamtPU8EKyZLsLtKsJ0j"
                                 })
                             }, 
             {
