@@ -2,7 +2,7 @@ import fetch from 'node-fetch'
 
 let handler = async (m, { conn, text }) => {
 
-  if (!text) throw `*فين الرسالة اللي عاوز تبعتها لمطوري ي حوب 🧞*`;
+  if (!text) throw `*فين الرسالة اللي تبي ترسلها لمطوري ي حوب 🧞*`;
   
   let who
     if (m.isGroup) who = m.mentionedJid[0] ? m.mentionedJid[0] : m.sender
@@ -10,7 +10,7 @@ let handler = async (m, { conn, text }) => {
   
   let teks = `*⟥•════─━⋄❲ ❳⋄━─════•⟤*\n*┊المرسل : @${who.split`@`[0]}*\n*┊الرسالة :*\n> *${text}\n*⟥•════─━⋄❲ ❳⋄━─════•⟤*`;
   
-  const me = '201145624848@s.whatsapp.net';
+  const me = '967783179256@s.whatsapp.net';
   
    try {
    
