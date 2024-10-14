@@ -30,7 +30,7 @@ const handler = async (m, { conn, command, text }) => {
   const loveMessage = isHighLove ? getRandomMessage(loveMessages) : getRandomMessage(notSoHighLoveMessages);
   const response =
     `⌘━━━━━━━⬣ *『👑』* ⬣━━━━━━━⌘\n` +
-    `*تم اختراقك بنجاح*✅, ${text}\n${loveDescription}\n*تم اختراقك بواسطه غوجو لايت ملفاتك وبياناتك عند شات المطور  EMAM*\n` + 
+    `*تم اختراقك بنجاح*✅, ${text}\n${loveDescription}\n*تم اختراقك بواسطه ستيفن ملفاتك وبياناتك عند شات المطور  EMAM*\n` + 
     `⌘━━━━━━━⬣ *『👑』* ⬣━━━━━━━⌘`    
   
   async function loading() {
