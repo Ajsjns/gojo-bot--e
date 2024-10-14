@@ -5,7 +5,7 @@ throw false
 }//غير زيرو و حط اسم بوتك
 let pesan = args.join` `
 let oi = `*🍷~الرساله:* ${pesan}`
-let teks = `*❄ 𝐆𝐎𝐉𝐎⚡𝐁𝐎𝐓 ❄* \n\n ${oi}\n\n*🌿┇الجروب :⇣*\n`
+let teks = `*❄ 𝐆𝐎𝐉𝐎⚡𝐁𝐎𝐓 ❄* \n\n ${oi}\n\n*🌿┇القروب :⇣*\n`
 for (let mem of participants) {
 teks += `*❄↫* @${mem.id.split('@')[0]}\n`}
 teks += `*𝐆𝐎𝐉𝐎⚡𝐁𝐎𝐓🍷*`
