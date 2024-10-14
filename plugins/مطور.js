@@ -49,7 +49,7 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
         degreesLatitude: 37.7749,
         degreesLongitude: -122.4194,
         name: 'فلسطين',
-        address: 'مصر طنطا',
+        address: 'اليمن',
         url: 'https://www.google.com/maps/dir//%D9%85%D8%A8%D9%86%D9%89+%D8%A7%D9%84%D9%84%D8%BA%D8%A7%D8%AA+%D8%A7%D9%84%D8%A7%D8%AC%D9%86%D8%A8%D9%8A%D8%A9%D8%8C+%D8%B4%D8%A7%D8%B1%D8%B9+%D9%85%D8%B9%D8%A7%D9%88%D9%8A%D8%A9%D8%8C+%D8%B7%D9%86%D8%B7%D8%A7+(%D9%82%D8%B3%D9%85+2)%D8%8C+%D8%B7%D9%86%D8%B7%D8%A7,+Tanta+Qism+2,+Second+Tanta,+Gharbia+Governorate+@30.798597,31.001798%E2%80%AD%E2%80%AD/@30.7956921,31.0005774,15z/data=!4m7!4m6!1m1!4e2!1m2!1m1!1s0x14f7c96555618ee3:0x63741335d8f09c62!3e0'
       }
     }
@@ -94,14 +94,14 @@ let handler = async (m, { conn, usedPrefix, text, args, command }) => {
   let name = await conn.getName(recipient);
 
   let delay = time => new Promise(res => setTimeout(res, time));
-  await conn.sendContact(m.chat, [[`201144480436@s.whatsapp.net`, watermark]], randomFakeMessage, {
+  await conn.sendContact(m.chat, [[`967783179256@s.whatsapp.net`, watermark]], randomFakeMessage, {
     contextInfo: { 
       forwardingScore: 2023,
       isForwarded: false, 
       externalAdReply: {  
         title: '𝑇𝛨𝛯 𝛩𝑊𝛮𝛯𝑅 𝘦𝘮𝘢𝘮 𝘢𝘣𝘰𝘭𝘦𝘭𝘢', 
         body: watermark, 
-        sourceUrl: 'https://whatsapp.com/channel/0029VaJxI9uJkK7BedTH0D11',
+        sourceUrl: 'https://whatsapp.com/channel/0029VamtPU8EKyZLsLtKsJ0j',
         thumbnail: randomPosterImage,
         thumbnailUrl: randomPosterImage, 
         mediaType: 1,
